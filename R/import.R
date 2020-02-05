@@ -25,7 +25,6 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
   enzyme <- gene$ENZYME
   reactions <- data.frame(mod_id = mod_id,
                           mod_rank = mod_rank,
-                          mod_type = mod_type,
                           reaction_genename = genename,
                           reaction_ensembl = ensembl,
                           reaction_ensembltrans = ensembltrans,
@@ -52,13 +51,11 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
                           specifier_type = specifier_type,
                           specifier_genename = unlist(specifier_genename),
                           specifier_entrezid = specifier_entrezid,
-                          specifier_ensembl = specifier_orgdb$ENSEMBL,
+                          specifier_ensembl = unlist(specifier_ensembl),
                           stringsAsFactors = FALSE)
   
-  transcripts_entrez_id <- select(orgdb,as.character(snoRNAdb$hgnc_symbol),
-                                  c("ENTREZID","SYMBOL"),"SYMBOL")[,"ENTREZID"]
-  transcripts <- data.frame(mod_id = mod_id,
-                            entrezid = transcripts_entrez_id,
-                            stringsAsFactors = FALSE)
-  makeTxModDb(modifications, reactions, specifier, transcripts)
+  transcripts_name <- select(orgdb,as.character(snoRNAdb$hgnc_symbol),
+                                  c("REFSEQ","SYMBOL"),"SYMBOL")[,"REFSEQ"]
+  modifications$transcript_name <- transcripts_name
+  makeTxModDb(modifications, reactions, specifier)
 }
