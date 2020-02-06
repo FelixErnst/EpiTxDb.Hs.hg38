@@ -1,8 +1,8 @@
-Package: TxModDb.Hsapiens.hg38
-Title: Annotation package for TxModDb object(s)
+Package: EpiTxDb.Hsapiens.hg38
+Title: Annotation package for EpiTxDb object(s)
 Description:
     Exposes an annotation databases generated from several sources by exposing
-    these as TxModDb object.
+    these as EpiTxDb object.
 Version: 0.98
 Authors@R: person("Felix G.M.", 
                   "Ernst", 
@@ -15,7 +15,7 @@ NeedsCompilation: no
 LazyData: false
 Depends:
     R (>= 3.6),
-    TxModDb
+    EpiTxDb
 Imports:
     AnnotationDbi
 biocViews:
@@ -24,7 +24,7 @@ biocViews:
     TxDb,
     Homo_sapiens
 Collate:
-    'TxModDb.Hsapiens.hg38.R'
+    'EpiTxDb.Hsapiens.hg38.R'
     'import.R'
 organism:
     Homo sapiens
@@ -32,5 +32,5 @@ species:
     Homo sapiens
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
-BugReports: https://github.com/FelixErnst/TxModDb.Hsapiens.hg38/issues
-URL: https://github.com/FelixErnst/TxModDb.Hsapiens.hg38
+BugReports: https://github.com/FelixErnst/EpiTxDb.Hsapiens.hg38/issues
+URL: https://github.com/FelixErnst/EpiTxDb.Hsapiens.hg38

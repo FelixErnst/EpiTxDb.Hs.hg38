@@ -41,21 +41,25 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
   specifier_entrezid <- mapIds(orgdb,unlist(specifier_genename),"ENTREZID",
                                "SYMBOL", multiVals = "list")
   specifier_ensembl <- mapIds(orgdb,unlist(specifier_genename),"ENSEMBL",
-                               "SYMBOL", multiVals = "list")
+                              "SYMBOL", multiVals = "list")
   specifier_ensembl_lengths <- lengths(specifier_ensembl)
   specifier_mod_id <- unlist(Map(rep,specifier_mod_id,specifier_ensembl_lengths))
   specifier_genename <- unlist(Map(rep,unlist(specifier_genename),specifier_ensembl_lengths))
   specifier_entrezid <- unlist(Map(rep,specifier_entrezid,specifier_ensembl_lengths))
   
-  specifier <- data.frame(mod_id = specifier_mod_id,
-                          specifier_type = specifier_type,
-                          specifier_genename = unlist(specifier_genename),
-                          specifier_entrezid = specifier_entrezid,
-                          specifier_ensembl = unlist(specifier_ensembl),
-                          stringsAsFactors = FALSE)
+  specifiers <- data.frame(mod_id = specifier_mod_id,
+                           specifier_type = specifier_type,
+                           specifier_genename = unlist(specifier_genename),
+                           specifier_entrezid = specifier_entrezid,
+                           specifier_ensembl = unlist(specifier_ensembl),
+                           stringsAsFactors = FALSE)
   
   transcripts_name <- select(orgdb,as.character(snoRNAdb$hgnc_symbol),
                                   c("REFSEQ","SYMBOL"),"SYMBOL")[,"REFSEQ"]
   modifications$transcript_name <- transcripts_name
-  makeTxModDb(modifications, reactions, specifier)
+  
+  references <- data.frame(mod_id = mod_id,
+                           reference_type = "PMID",
+                           reference = "16381836")
+  makeEpiTxDb(modifications, reactions, specifiers, references)
 }
