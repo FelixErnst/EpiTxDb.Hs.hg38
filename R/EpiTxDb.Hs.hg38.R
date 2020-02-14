@@ -44,31 +44,33 @@ NULL
   }
 }
 
+.load_resource <- function(version = "1", type = NA){
+  .check_version(version)
+  ah <- AnnotationHub()
+  id <- AH_DATA[AH_DATA$version == version,type]
+  if(!is.na(id)){
+    stop("Not data for '",type,"' and version '",version,"' available.")
+  }
+  resource <- ah[[]]
+  return(resource)
+}
+
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
 EpiTxDb.Hs.hg38.RMBase <- function(version = "1"){
-  .check_version(version)
-  ah <- AnnotationHub()
-  resource <- ah[[AH_DATA[AH_DATA$version == version,"RMBase"]]]
-  return(resource)
+  .load_resource(version = version, type = "RMBase")
 }
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
 EpiTxDb.Hs.hg38.snoRNAdb <- function(version = "1"){
-  .check_version(version)
-  ah <- AnnotationHub()
-  resource <- ah[[AH_DATA[AH_DATA$version == version,"snoRNAdb"]]]
-  return(resource)
+  .load_resource(version = version, type = "snoRNAdb")
 }
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
 EpiTxDb.Hs.hg38.tRNAdb <- function(version = "1"){
-  .check_version(version)
-  ah <- AnnotationHub()
-  resource <- ah[[AH_DATA[AH_DATA$version == version,"tRNAdb"]]]
-  return(resource)
+  .load_resource(version = version, type = "tRNAdb")
 }
 
 # version information ----------------------------------------------------------
