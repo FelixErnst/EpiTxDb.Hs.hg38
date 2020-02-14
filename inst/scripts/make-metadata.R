@@ -49,6 +49,6 @@ df$Species <- "Homo sapiens"
 df$TaxonomyId <- "9606"
 df$SourceVersion <- Sys.time()
 df$Genome <- "hg38"
-df$tags <- "EpiTxDb:hg38:Modification:Epitranscriptomics"
+df$Tags <- "EpiTxDb:hg38:Modification:Epitranscriptomics"
 
 write.csv(df, file = "inst/extdata/metadata.csv", row.names = FALSE)
