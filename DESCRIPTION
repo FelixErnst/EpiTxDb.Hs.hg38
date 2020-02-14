@@ -1,9 +1,9 @@
-Package: EpiTxDb.Hsapiens.hg38
-Title: Annotation package for EpiTxDb object(s)
+Package: EpiTxDb.Hs.hg38
+Title: Annotation package for EpiTxDb objects
 Description:
     Exposes an annotation databases generated from several sources by exposing
-    these as EpiTxDb object.
-Version: 0.98
+    these as EpiTxDb object. Generated for Homo sapiens/hg38.
+Version: 0.99.0
 Authors@R: person("Felix G.M.", 
                   "Ernst", 
                   email = "felix.gm.ernst@outlook.com", 
@@ -13,24 +13,28 @@ License: Artistic-2.0
 Encoding: UTF-8
 NeedsCompilation: no
 LazyData: false
-Depends:
-    R (>= 3.6),
-    EpiTxDb
-Imports:
-    AnnotationDbi
 biocViews:
     AnnotationData,
     Epitranscriptomics,
     TxDb,
     Homo_sapiens
+Depends:
+    R (>= 3.6),
+    EpiTxDb
+Imports:
+    AnnotationDbi
+Suggests:
+    BiocStyle,
+    knitr,
+    rmarkdown,
+    testthat
 Collate:
-    'EpiTxDb.Hsapiens.hg38.R'
-    'import.R'
+    'EpiTxDb.Hs.hg38.R'
 organism:
     Homo sapiens
 species:
     Homo sapiens
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
-BugReports: https://github.com/FelixErnst/EpiTxDb.Hsapiens.hg38/issues
-URL: https://github.com/FelixErnst/EpiTxDb.Hsapiens.hg38
+BugReports: https://github.com/FelixErnst/EpiTxDb.Hs.hg38/issues
+URL: https://github.com/FelixErnst/EpiTxDb.Hs.hg38
