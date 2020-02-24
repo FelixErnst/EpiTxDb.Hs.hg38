@@ -84,43 +84,47 @@ tx <- assemble_tx(edb, "hg38")
 # functions for import
 ################################################################################
 
-import.RMBase <- function(bs, tx, organism, genome, type, chain){
-  seq <- getSeq(bs,tx)
-  seq <- relist(unlist(unlist(seq)),
-                IRanges::PartitioningByWidth(sum(nchar(seq))))
-  seq_rna <- as(seq,"RNAStringSet")
+import.RMBase <- function(bs, organism, genome, type, chain){
+  metadata <- data.frame(name = c("Genome","Coordinates"),
+                         value = c("hg38","per Genome"))
   #
   files <- downloadRMBaseFiles(organism, genome, type)
-  gr <- getRMBaseDataAsGRanges(files, tx = tx, sequences = seq,
-                               shift.to.transcript = FALSE,
-                               check.vs.sequence = FALSE)
+  gr <- getRMBaseDataAsGRanges(files)
   # use liftOver to get the hg38 coordinates
   gr <- unlist(liftOver(gr,chain))
-  gr <- shiftGenomicToTranscript(gr, tx)
   f <- !duplicated(paste0(as.character(gr),"-",
-                          mcols(gr)$mod_type,"-",
-                          mcols(gr)$transcript_name))
+                          mcols(gr)$mod_type))
   gr <- gr[f]
+  seq <- getSeq(bs, seqlevels(gr))
+  seq_rna <- as(seq, "RNAStringSet")
   colnames(mcols(gr)) <- gsub("mod_type","mod",colnames(mcols(gr)))
-  gr <- Modstrings::removeIncompatibleModifications(gr, seq_rna[unique(seqnames(gr))])
+  # do plus and minus strand separatly, since removeIncompatibleModifications
+  # only accepts plus strand
+  gr_plus <- 
+    Modstrings::removeIncompatibleModifications(gr[strand(gr) == "+"], seq_rna)
+  gr_minus <- gr[strand(gr) == "-"]
+  strand(gr_minus) <- "+"
+  gr_minus <-
+    Modstrings::removeIncompatibleModifications(gr_minus, complement(seq_rna))
+  strand(gr_minus) <- "-"
+  gr <- c(gr_plus,gr_minus)
+  gr <- gr[order(seqnames(gr),start(gr),strand(gr))]
   colnames(mcols(gr)) <- gsub("^mod$","mod_type",colnames(mcols(gr)))
+  metadata <- EpiTxDb:::.add_sequence_check_to_metadata(metadata)
   #
   mcols(gr)$mod_id <- seq_along(gr)
-  mcols(gr)$transcript_name <- mcols(gr)$tx_id
-  mcols(gr)$transcript_id <- 
-    as.integer(factor(mcols(gr)$transcript_name,
-                      unique(mcols(gr)$transcript_name)))
-  mcols(gr)$tx_id <- NULL
-  metadata <- EpiTxDb:::.add_sequence_check_to_metadata(data.frame())
-  makeEpiTxDbfromGRanges(gr, metadata = metadata)
+  makeEpiTxDbFromGRanges(gr, metadata = metadata)
 }
 
 import_from_tRNAdb <- function(organism, bs, tx){
+  metadata <- data.frame(name = c("Genome","Coordinates"),
+                         value = c("hg38","per Transcript"))
+  #
   seq <- getSeq(bs,tx)
   seq <- relist(unlist(unlist(seq)),
                 IRanges::PartitioningByWidth(sum(nchar(seq))))
   seq_rna <- as(seq,"RNAStringSet")
-  gr <- gettRNAdbDataAsGRanges(organism, tx = tx, sequences = seq_rna)
+  gr <- gettRNAdbDataAsGRanges(organism, sequences = seq_rna)
   gr <- gr[!duplicated(paste0(as.character(gr),"-",gr$mod_type))]
   # fix an error in the tRNAdb for tRNA Tyr at position 20
   fix <- split(gr[start(gr) == 20],seqnames(gr[start(gr) == 20]))
@@ -129,12 +133,14 @@ import_from_tRNAdb <- function(organism, bs, tx){
   fix[fix_f] <- fix_replace
   gr <- c(gr[start(gr) != 20],unlist(fix))
   gr <- gr[order(gr)]
+  names(gr) <- NULL
   #
   colnames(mcols(gr)) <- gsub("mod_type","mod",colnames(mcols(gr)))
   gr <- Modstrings::removeIncompatibleModifications(gr, seq_rna)
   colnames(mcols(gr)) <- gsub("^mod$","mod_type",colnames(mcols(gr)))
+  metadata <- EpiTxDb:::.add_sequence_check_to_metadata(metadata)
   #
-  makeEpiTxDbfromGRanges(gr)
+  makeEpiTxDbFromGRanges(gr, metadata = metadata)
 }
 
 import_from_snoRNAdb <- function(snoRNAdb, orgdb){
@@ -153,8 +159,8 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
                               mod_type = mod_type,
                               mod_start = mod_start,
                               mod_end = mod_end,
-                              transcript_id = as.integer(transcripts$ENTREZID),
-                              transcript_name = transcripts$REFSEQ,
+                              sn_id = as.integer(transcripts$ENTREZID),
+                              sn_name = transcripts$REFSEQ,
                               stringsAsFactors = FALSE)
   
   # Reactions
@@ -167,7 +173,7 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
                      columns = c("GENENAME","ENSEMBL","ENTREZID"),
                      keytype = "SYMBOL")
   
-  mod_rank <- 1L
+  rx_rank <- 1L
   mod_type <- snoRNAdb$modification
   genename <- character(length(mod_type))
   ensembl <- character(length(mod_type))
@@ -184,11 +190,11 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
   entrezid[mod_type != "Y"] <- gene_fbl$ENTREZID
   
   reactions <- data.frame(mod_id = mod_id,
-                          mod_rank = mod_rank,
-                          reaction_genename = genename,
-                          reaction_ensembl = ensembl,
-                          reaction_ensembltrans = ensembltrans,
-                          reaction_entrezid = entrezid,
+                          rx_genename = genename,
+                          rx_rank = rx_rank,
+                          rx_ensembl = ensembl,
+                          rx_ensembltrans = ensembltrans,
+                          rx_entrezid = entrezid,
                           stringsAsFactors = FALSE)
   
   # Specifiers
@@ -204,38 +210,41 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
                               "SYMBOL")
   
   specifiers <- data.frame(mod_id = specifier_mod_id,
-                           specifier_type = specifier_type,
-                           specifier_genename = unlist(specifier_genename),
-                           specifier_entrezid = specifier_entrezid,
-                           specifier_ensembl = specifier_ensembl,
+                           spec_type = specifier_type,
+                           spec_genename = unlist(specifier_genename),
+                           spec_ensembl = specifier_ensembl,
+                           spec_entrezid = specifier_entrezid,
                            stringsAsFactors = FALSE)
   # References
   references <- data.frame(mod_id = mod_id,
-                           reference_type = "PMID",
-                           reference = "16381836")
-  
-  makeEpiTxDb(modifications, reactions, specifiers, references)
+                           ref_type = "PMID",
+                           ref = "16381836")
+  #
+  metadata <- data.frame(name = c("Genome","Coordinates"),
+                         value = c("hg38","per Transcript"))
+  makeEpiTxDb(modifications, reactions, specifiers, references,
+              metadata = metadata)
 }
 
 # start the import RMBase, snoRNAdb and tRNAdb data
 start.import <- function(bs, orgdb, tx, chain){
-  etdb <- import.RMBase(bs, tx, "human", "hg19",
-                        listAvailableModFromRMBase("human", "hg19"),
-                        chain)
-  db <- dbConnect(SQLite(), "hub/EpiTxDb.Hs.hg38.RMBase.sqlite")
+  etdb <- import_from_snoRNAdb(read.csv2(RNAmodR.Data::RNAmodR.Data.snoRNAdb()),
+                               orgdb)
+  db <- dbConnect(SQLite(), "hub/EpiTxDb.Hs.hg38.snoRNAdb.sqlite")
   sqliteCopyDatabase(etdb$conn, db)
   dbDisconnect(etdb$conn)
   dbDisconnect(db)
-
+  
   etdb <- import_from_tRNAdb("Homo sapiens", bs, tx)
   db <- dbConnect(SQLite(), "hub/EpiTxDb.Hs.hg38.tRNAdb.sqlite")
   sqliteCopyDatabase(etdb$conn, db)
   dbDisconnect(etdb$conn)
   dbDisconnect(db)
-
-  etdb <- import_from_snoRNAdb(read.csv2(RNAmodR.Data::RNAmodR.Data.snoRNAdb()),
-                               orgdb)
-  db <- dbConnect(SQLite(), "hub/EpiTxDb.Hs.hg38.snoRNAdb.sqlite")
+  
+  etdb <- import.RMBase(bs, "human", "hg19",
+                        listAvailableModFromRMBase("human", "hg19"),
+                        chain)
+  db <- dbConnect(SQLite(), "hub/EpiTxDb.Hs.hg38.RMBase.sqlite")
   sqliteCopyDatabase(etdb$conn, db)
   dbDisconnect(etdb$conn)
   dbDisconnect(db)

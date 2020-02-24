@@ -31,13 +31,14 @@ suppressPackageStartupMessages({
 ```
 ```{r, eval=FALSE}
 library(EpiTxDb.Hs.hg38)
+etd <- EpiTxDb.Hs.hg38.tRNAdb()
 ```
 
 Modification information can be accessed through the typical function for an
 `EpiTxDb` object, for example `modifications()`:
 
 ```{r}
-modifications(EpiTxDb.Hs.hg38.tRNAdb)
+modifications(etd)
 ```
 
 For a more detailed overview and explanation of the functionality of the 

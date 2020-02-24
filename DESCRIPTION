@@ -14,6 +14,7 @@ Encoding: UTF-8
 NeedsCompilation: no
 LazyData: false
 biocViews:
+    AnnotationHub,
     AnnotationData,
     Epitranscriptomics,
     TxDb,
