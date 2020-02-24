@@ -42,7 +42,27 @@ df <- rbind(
                   DataProvider = "tRNAdb",
                   RDataClass = "SQLiteFile", 
                   DispatchClass = "SQLiteFile",
-                  RDataPath = "EpiTxDb.Hs.hg38/EpiTxDb.Hs.hg38.tRNAdb.sqlite"))
+                  RDataPath = "EpiTxDb.Hs.hg38/EpiTxDb.Hs.hg38.tRNAdb.sqlite")),
+  cbind(df_Base,
+        DataFrame(Title = "Chain file for Homo sapiens rRNA hg19 to hg38", 
+                  Description = paste0(
+                    ""),
+                  SourceType = "Chain",
+                  SourceUrl = "https://www.ncbi.nlm.nih.gov/nuccore/U13369;https://www.ncbi.nlm.nih.gov/nuccore/NR_003287.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003286.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003285.3",
+                  DataProvider = "NCBI",
+                  RDataClass = "ChainFile", 
+                  DispatchClass = "ChainFile",
+                  RDataPath = "EpiTxDb.Hs.hg38/rRNA.hg19Tohg38.liftOver")),
+  cbind(df_Base,
+        DataFrame(Title = "Chain file for Homo sapiens rRNA hg38 to hg19", 
+                  Description = paste0(
+                    ""),
+                  SourceType = "Chain",
+                  SourceUrl = "https://www.ncbi.nlm.nih.gov/nuccore/U13369;https://www.ncbi.nlm.nih.gov/nuccore/NR_003287.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003286.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003285.3",
+                  DataProvider = "NCBI",
+                  RDataClass = "ChainFile", 
+                  DispatchClass = "ChainFile",
+                  RDataPath = "EpiTxDb.Hs.hg38/rRNA.hg38Tohg19.liftOver"))
 )
 
 df$Species <- "Homo sapiens"
