@@ -85,8 +85,10 @@ tx <- assemble_tx(edb, "hg38")
 ################################################################################
 
 import.RMBase <- function(bs, organism, genome, type, chain){
-  metadata <- data.frame(name = c("Genome","Coordinates"),
-                         value = c("hg38","per Genome"))
+  metadata <- data.frame(name = c("Data source","Organism","Genome",
+                                  "Coordinates"),
+                         value = c("RMBase v2.0","Homo sapiens","hg38",
+                                   "per Genome"))
   #
   files <- downloadRMBaseFiles(organism, genome, type)
   gr <- getRMBaseDataAsGRanges(files)
@@ -117,8 +119,10 @@ import.RMBase <- function(bs, organism, genome, type, chain){
 }
 
 import_from_tRNAdb <- function(organism, bs, tx){
-  metadata <- data.frame(name = c("Genome","Coordinates"),
-                         value = c("hg38","per Transcript"))
+  metadata <- data.frame(name = c("Data source","Organism","Genome",
+                                  "Coordinates"),
+                         value = c("tRNAdb","Homo sapiens","hg38",
+                                   "per Transcript"))
   #
   seq <- getSeq(bs,tx)
   seq <- relist(unlist(unlist(seq)),
@@ -144,6 +148,10 @@ import_from_tRNAdb <- function(organism, bs, tx){
 }
 
 import_from_snoRNAdb <- function(snoRNAdb, orgdb){
+  metadata <- data.frame(name = c("Data source","Organism","Genome",
+                                  "Coordinates"),
+                         value = c("snoRNAdb","Homo sapiens","hg38",
+                                   "per Transcript"))
   # Modifications
   mod_id <- seq_len(nrow(snoRNAdb))
   mod_name <- paste0(snoRNAdb$modification,"_",snoRNAdb$position)
@@ -219,9 +227,6 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
   references <- data.frame(mod_id = mod_id,
                            ref_type = "PMID",
                            ref = "16381836")
-  #
-  metadata <- data.frame(name = c("Genome","Coordinates"),
-                         value = c("hg38","per Transcript"))
   makeEpiTxDb(modifications, reactions, specifiers, references,
               metadata = metadata)
 }
