@@ -3,4 +3,5 @@
 export(EpiTxDb.Hs.hg38.RMBase)
 export(EpiTxDb.Hs.hg38.snoRNAdb)
 export(EpiTxDb.Hs.hg38.tRNAdb)
+import(AnnotationHub)
 import(EpiTxDb)
