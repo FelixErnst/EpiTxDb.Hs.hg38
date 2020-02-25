@@ -28,7 +28,8 @@ Suggests:
     BiocStyle,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    AnnotationHubData
 Collate:
     'EpiTxDb.Hs.hg38.R'
 organism:

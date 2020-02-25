@@ -1,5 +1,6 @@
 
 # Base data for all data sets --------------------------------------------------
+library(S4Vectors)
 
 df_Base <- DataFrame(
   BiocVersion = "3.11",
@@ -17,7 +18,7 @@ df <- rbind(
         DataFrame(Title = "EpiTxDb RMBase v2.0 for Homo sapiens hg38", 
                   Description = paste0(
                     ""), 
-                  SourceType = "TXT",
+                  SourceType = "BED",
                   SourceUrl = RMBaseURL,
                   DataProvider = "RMBase v2.0",
                   RDataClass = "SQLiteFile", 

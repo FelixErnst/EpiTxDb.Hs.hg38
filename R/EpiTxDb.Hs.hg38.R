@@ -10,7 +10,7 @@
 #' The names of any objects exposed by this package indicate the origin and
 #' resources exposed. So for example \code{EpiTxDb.Hs.hg38.snoRNAdb} would be a
 #' \code{EpiTxDb} object of Homo sapiens data from snoRNAdb build based on the
-#' hg38 genome build.
+#' hg38 genome.
 #'
 #' @return a \code{\link[EpiTxDb:EpiTxDb-class]{EpiTxDb}} object 
 #' 
