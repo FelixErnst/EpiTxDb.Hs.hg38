@@ -38,7 +38,7 @@ df <- rbind(
         DataFrame(Title = "EpiTxDb tRNAdb for Homo sapiens hg38", 
                   Description = paste0(
                     ""),
-                  SourceType = "TXT",
+                  SourceType = "XML",
                   SourceUrl = tRNAdbURL,
                   DataProvider = "tRNAdb",
                   RDataClass = "SQLiteFile", 
