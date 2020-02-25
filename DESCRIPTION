@@ -21,9 +21,8 @@ biocViews:
     Homo_sapiens
 Depends:
     R (>= 3.6),
+    AnnotationHub,
     EpiTxDb
-Imports:
-    AnnotationDbi
 Suggests:
     BiocStyle,
     knitr,

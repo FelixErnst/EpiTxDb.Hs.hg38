@@ -30,47 +30,48 @@
 #' EpiTxDb.Hs.hg38.snoRNAdb()
 NULL
 
+#' @import AnnotationHub
 #' @import EpiTxDb
 NULL
 
 .check_version <- function(version){
-  if(!is.character(version) || length(version) != 1L){
-    stop("'version' must be single character value.",call. = FALSE)
-  }
-  if(!(version %in% AH_DATA$version)){
-    stop("'version' must be valid version. Currently valid versions are: '",
-         paste(unique(AH_DATA$version), collapse = "', '"),"'",
-         call. = FALSE)
-  }
+    if(!is.character(version) || length(version) != 1L){
+        stop("'version' must be single character value.",call. = FALSE)
+    }
+    if(!(version %in% AH_DATA$version)){
+        stop("'version' must be valid version. Currently valid versions are: '",
+             paste(unique(AH_DATA$version), collapse = "', '"),"'",
+             call. = FALSE)
+    }
 }
 
 .load_resource <- function(version = "1", type = NA){
-  .check_version(version)
-  ah <- AnnotationHub()
-  id <- AH_DATA[AH_DATA$version == version,type]
-  if(!is.na(id)){
-    stop("Not data for '",type,"' and version '",version,"' available.")
-  }
-  resource <- ah[[]]
-  return(resource)
+    .check_version(version)
+    ah <- AnnotationHub()
+    id <- AH_DATA[AH_DATA$version == version,type]
+    if(!is.na(id)){
+        stop("Not data for '",type,"' and version '",version,"' available.")
+    }
+    resource <- ah[[]]
+    return(resource)
 }
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
 EpiTxDb.Hs.hg38.RMBase <- function(version = "1"){
-  .load_resource(version = version, type = "RMBase")
+    .load_resource(version = version, type = "RMBase")
 }
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
 EpiTxDb.Hs.hg38.snoRNAdb <- function(version = "1"){
-  .load_resource(version = version, type = "snoRNAdb")
+    .load_resource(version = version, type = "snoRNAdb")
 }
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
 EpiTxDb.Hs.hg38.tRNAdb <- function(version = "1"){
-  .load_resource(version = version, type = "tRNAdb")
+    .load_resource(version = version, type = "tRNAdb")
 }
 
 # version information ----------------------------------------------------------
