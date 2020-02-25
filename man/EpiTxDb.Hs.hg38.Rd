@@ -28,7 +28,7 @@ resources exposed. So for example \code{EpiTxDb.Hs.hg38.snoRNAdb} would be a
 hg38 genome build.
 }
 \examples{
-EpiTxDb.Hs.hg38.snoRNAdb
+EpiTxDb.Hs.hg38.snoRNAdb()
 }
 \seealso{
 \itemize{

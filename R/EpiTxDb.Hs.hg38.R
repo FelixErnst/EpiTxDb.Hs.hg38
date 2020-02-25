@@ -27,7 +27,7 @@
 #' @name EpiTxDb.Hs.hg38
 #' 
 #' @examples 
-#' EpiTxDb.Hs.hg38.snoRNAdb
+#' EpiTxDb.Hs.hg38.snoRNAdb()
 NULL
 
 #' @import EpiTxDb
