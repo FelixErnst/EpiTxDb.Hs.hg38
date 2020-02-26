@@ -33,9 +33,7 @@ EpiTxDb.Hs.hg38.snoRNAdb()
 \seealso{
 \itemize{
 \item{\code{\link[EpiTxDb:modifications]{modifications}}}
-\item{\code{\link[EpiTxDb:modifications]{reactions}}}
-\item{\code{\link[EpiTxDb:modifications]{specifies}}}
-\item{\code{\link[EpiTxDb:modifications]{modificationsByTranscript}}}
+\item{\code{\link[EpiTxDb:modifications]{modificationsBy}}}
 \item{\code{\link[EpiTxDb:modifications]{modifiedSeqsByTranscript}}}
 }
 }

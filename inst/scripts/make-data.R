@@ -167,6 +167,7 @@ import_from_snoRNAdb <- function(snoRNAdb, orgdb){
                               mod_type = mod_type,
                               mod_start = mod_start,
                               mod_end = mod_end,
+                              mod_strand = "+",
                               sn_id = as.integer(transcripts$ENTREZID),
                               sn_name = transcripts$REFSEQ,
                               stringsAsFactors = FALSE)

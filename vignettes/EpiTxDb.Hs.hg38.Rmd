@@ -21,8 +21,11 @@ BiocStyle::markdown(css.files = c('custom.css'))
 
 # Available resources
 
-`EpiTxDb.Hs.hg38` contains post-transcriptional RNA modifications from 
-RMBase v2.0 [@Xuan.2017], tRNAdb [@Juehling.2009] and snoRNAdb [@Lestrade.2006].
+`EpiTxDb.Hs.hg38` contains post-transcriptional RNA modifications from RMBase
+v2.0 [[@Xuan.2017]](#References), tRNAdb [[@Juehling.2009]](#References) and
+snoRNAdb [[@Lestrade.2006]](#References) and can be accessed through the 
+functions `EpiTxDb.Hs.hg38.tRNAdb()`, `EpiTxDb.Hs.hg38.snoRNAdb()` and 
+`EpiTxDb.Hs.hg38.RMBase()`
 
 ```{r, echo=FALSE}
 suppressPackageStartupMessages({
@@ -31,18 +34,81 @@ suppressPackageStartupMessages({
 ```
 ```{r, eval=FALSE}
 library(EpiTxDb.Hs.hg38)
-etd <- EpiTxDb.Hs.hg38.tRNAdb()
+etdb <- EpiTxDb.Hs.hg38.tRNAdb()
+etdb
 ```
 
 Modification information can be accessed through the typical function for an
 `EpiTxDb` object, for example `modifications()`:
 
 ```{r}
-modifications(etd)
+modifications(etdb)
 ```
 
 For a more detailed overview and explanation of the functionality of the 
 `EpiTxDb` class, have a look at the `EpiTxDb` package.
+
+# Chain files for rRNA
+
+The rRNA sequence annotation for ribosomal RNA has undergone some clarification
+processes in recent years. Therefore some of the annotation of modification 
+refer to an older rRNA annotation.
+
+In order to help using and updating older information, a chain file was
+generated for use with `liftOver`, which allows conversion of hg19 coordinates
+to hg38 coordinates and back.
+
+```{r}
+cf <- rRNA.hg19Tohg38()
+cf
+```
+
+The following example illustrate a use case, in which data from the Modomics
+[[@Boccaletto.2018]](#References) database will be used. The sequence data
+currently stored, is the hg19 version. First we load the sequence as
+`ModRNAStringSet`.
+
+```{r}
+library(rtracklayer)
+library(Modstrings)
+files <- c(system.file("extdata","Modomics.LSU.Hs.txt",
+                       package = "EpiTxDb.Hs.hg38"),
+           system.file("extdata","Modomics.SSU.Hs.txt",
+                       package = "EpiTxDb.Hs.hg38"))
+seq <- lapply(files,readLines,encoding = "UTF-8")
+seq <- unlist(seq)
+names <- seq[seq.int(1L,6L,2L)]
+seq <- seq[seq.int(2L,6L,2L)]
+seq <- ModRNAStringSet(sanitizeFromModomics(gsub("-","",seq)))
+names(seq) <- c("28S","5.8S","18S")
+mod <- separate(seq)
+```
+
+The position for the one `m7G` and two `m6A` are of for the current rRNA
+sequences. This is also the case for the other modifications.
+
+```{r}
+mod[mod$mod == "m7G" | mod$mod == "m6A"]
+```
+
+Using the chain file we can `liftOver` the coordinates, which matches the 
+expected coordinates.
+
+```{r}
+mod_new <- unlist(liftOver(mod,cf))
+mod_new[mod_new$mod == "m7G" | mod_new$mod == "m6A"]
+```
+
+In addition, the `ModRNAStringSet` object can be update with the current 
+sequence.
+
+```{r}
+rna <- readDNAStringSet(system.file("extdata","rRNA_hg38.fasta",
+                                    package = "EpiTxDb.Hs.hg38")) 
+seqtype(rna) <- "RNA"
+seq_new <- combineIntoModstrings(rna,mod_new)
+seq_new
+```
 
 # Sessioninfo
 
