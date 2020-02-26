@@ -4,7 +4,8 @@
 
 # Installation
 
-The current version of the RNAmodR package is available from Bioconductor.
+The current version of the `EpiTxDb.Hs.hg38` package is available from 
+Bioconductor.
 
 ## Github
 
