@@ -20,7 +20,7 @@ biocViews:
     TxDb,
     Homo_sapiens
 Depends:
-    R (>= 3.6),
+    R (>= 4.0),
     AnnotationHub,
     EpiTxDb
 Suggests:
