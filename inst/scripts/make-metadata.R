@@ -56,7 +56,10 @@ df <- rbind(
   cbind(df_Base,
         DataFrame(Title = "Chain file for Homo sapiens rRNA hg19 to hg38", 
                   Description = paste0(
-                    ""),
+                    "Chain file was generated from 5.8S rRNA, 18S rRNA and 28S",
+                    " rRNA (U13369) and current NR_003287, NR_003286.4 and ",
+                    "NR_003285.3 sequences using a custom script provided in ",
+                    "the EpiTxDb.Hs.hg38 package."),
                   SourceType = "Chain",
                   SourceUrl = "https://www.ncbi.nlm.nih.gov/nuccore/U13369;https://www.ncbi.nlm.nih.gov/nuccore/NR_003287.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003286.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003285.3",
                   DataProvider = "NCBI",
@@ -66,7 +69,10 @@ df <- rbind(
   cbind(df_Base,
         DataFrame(Title = "Chain file for Homo sapiens rRNA hg38 to hg19", 
                   Description = paste0(
-                    ""),
+                    "Chain file was generated from 5.8S rRNA, 18S rRNA and 28S",
+                    " rRNA (U13369) and current NR_003287, NR_003286.4 and ",
+                    "NR_003285.3 sequences using a custom script provided in ",
+                    "the EpiTxDb.Hs.hg38 package."),
                   SourceType = "Chain",
                   SourceUrl = "https://www.ncbi.nlm.nih.gov/nuccore/U13369;https://www.ncbi.nlm.nih.gov/nuccore/NR_003287.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003286.4;https://www.ncbi.nlm.nih.gov/nuccore/NR_003285.3",
                   DataProvider = "NCBI",
