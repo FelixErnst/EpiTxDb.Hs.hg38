@@ -56,10 +56,11 @@ refer to an older rRNA annotation.
 
 In order to help using and updating older information, a chain file was
 generated for use with `liftOver`, which allows conversion of hg19 coordinates
-to hg38 coordinates and back.
+to hg38 coordinates and back. The resources can be loaded via
+`chain.rRNA.hg19Tohg38()` and `chain.rRNA.hg38Tohg19()`.
 
 ```{r}
-cf <- rRNA.hg19Tohg38()
+cf <- chain.rRNA.hg19Tohg38()
 cf
 ```
 

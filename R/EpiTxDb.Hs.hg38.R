@@ -50,7 +50,7 @@ NULL
     if(!is.na(id)){
         stop("Not data for '",type,"' and version '",version,"' available.")
     }
-    resource <- ah[[]]
+    resource <- ah[[id]]
     return(resource)
 }
 
@@ -72,12 +72,26 @@ EpiTxDb.Hs.hg38.tRNAdb <- function(version = "1"){
     .load_resource(version = version, type = "tRNAdb")
 }
 
+#' @rdname EpiTxDb.Hs.hg38
+#' @export
+chain.rRNA.hg19Tohg38 <- function(version = "1"){
+    .load_resource(version = version, type = "cf_hg19Tohg38")
+}
+
+#' @rdname EpiTxDb.Hs.hg38
+#' @export
+chain.rRNA.hg28Tohg19 <- function(version = "1"){
+    .load_resource(version = version, type = "cf_hg38Tohg19")
+}
+
 # version information ----------------------------------------------------------
 
 AH_DATA <- data.frame(version = "1",
-                      RMBase = "AH00000",
-                      snoRNAdb = "AH00000",
-                      tRNAdb = "AH00000")
+                      RMBase = "AH78912",
+                      snoRNAdb = "AH78913",
+                      tRNAdb = "AH78914",
+                      cf_hg19Tohg38 = "AH78915",
+                      cf_hg38Tohg19 = "AH78916")
 
 # AH_DATA <- rbind(AH_DATA,
 #                  data.frame(version = "1.0",

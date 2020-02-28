@@ -3,5 +3,7 @@
 export(EpiTxDb.Hs.hg38.RMBase)
 export(EpiTxDb.Hs.hg38.snoRNAdb)
 export(EpiTxDb.Hs.hg38.tRNAdb)
+export(chain.rRNA.hg19Tohg38)
+export(chain.rRNA.hg28Tohg19)
 import(AnnotationHub)
 import(EpiTxDb)

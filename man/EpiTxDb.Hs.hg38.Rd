@@ -6,6 +6,8 @@
 \alias{EpiTxDb.Hs.hg38.RMBase}
 \alias{EpiTxDb.Hs.hg38.snoRNAdb}
 \alias{EpiTxDb.Hs.hg38.tRNAdb}
+\alias{chain.rRNA.hg19Tohg38}
+\alias{chain.rRNA.hg28Tohg19}
 \title{Annotation package for \code{EpiTxDb} objects}
 \usage{
 EpiTxDb.Hs.hg38.RMBase(version = "1")
@@ -13,6 +15,10 @@ EpiTxDb.Hs.hg38.RMBase(version = "1")
 EpiTxDb.Hs.hg38.snoRNAdb(version = "1")
 
 EpiTxDb.Hs.hg38.tRNAdb(version = "1")
+
+chain.rRNA.hg19Tohg38(version = "1")
+
+chain.rRNA.hg28Tohg19(version = "1")
 }
 \value{
 a \code{\link[EpiTxDb:EpiTxDb-class]{EpiTxDb}} object
