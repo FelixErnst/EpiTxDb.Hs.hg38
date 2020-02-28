@@ -28,7 +28,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    AnnotationHubData
+    Modstrings,
+    rtracklayer
 Collate:
     'EpiTxDb.Hs.hg38.R'
 organism:

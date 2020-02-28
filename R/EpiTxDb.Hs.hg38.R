@@ -12,6 +12,9 @@
 #' \code{EpiTxDb} object of Homo sapiens data from snoRNAdb build based on the
 #' hg38 genome.
 #'
+#' @param version a \code{character} value defining a version. Versions
+#'   available: \code{"1"}.(default: \code{version = "1"})
+#' 
 #' @return a \code{\link[EpiTxDb:EpiTxDb-class]{EpiTxDb}} object 
 #' 
 #' @seealso
@@ -47,7 +50,7 @@ NULL
     .check_version(version)
     ah <- AnnotationHub()
     id <- AH_DATA[AH_DATA$version == version,type]
-    if(!is.na(id)){
+    if(is.na(id)){
         stop("Not data for '",type,"' and version '",version,"' available.")
     }
     resource <- ah[[id]]
@@ -91,7 +94,8 @@ AH_DATA <- data.frame(version = "1",
                       snoRNAdb = "AH78913",
                       tRNAdb = "AH78914",
                       cf_hg19Tohg38 = "AH78915",
-                      cf_hg38Tohg19 = "AH78916")
+                      cf_hg38Tohg19 = "AH78916",
+                      stringsAsFactors = FALSE)
 
 # AH_DATA <- rbind(AH_DATA,
 #                  data.frame(version = "1.0",
