@@ -3,7 +3,7 @@ Title: Annotation package for EpiTxDb objects
 Description:
     Exposes an annotation databases generated from several sources by exposing
     these as EpiTxDb object. Generated for Homo sapiens/hg38.
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: person("Felix G.M.", 
                   "Ernst", 
                   email = "felix.gm.ernst@outlook.com", 
@@ -16,8 +16,7 @@ LazyData: false
 biocViews:
     AnnotationHub,
     AnnotationData,
-    Epitranscriptomics,
-    TxDb,
+    Organism,
     Homo_sapiens
 Depends:
     R (>= 4.0),
