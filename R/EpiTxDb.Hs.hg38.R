@@ -83,8 +83,16 @@ chain.rRNA.hg19Tohg38 <- function(version = "1"){
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
-chain.rRNA.hg28Tohg19 <- function(version = "1"){
+chain.rRNA.hg38Tohg19 <- function(version = "1"){
     .load_resource(version = version, type = "cf_hg38Tohg19")
+}
+
+#' @rdname EpiTxDb.Hs.hg38
+#' @importFrom Biostrings readDNAStringSet
+#' @export
+rRNA.hg38 <- function(){
+    Biostrings::readDNAStringSet(system.file("extdata","rRNA_hg38.fasta",
+                                             package = "EpiTxDb.Hs.hg38"))
 }
 
 # version information ----------------------------------------------------------

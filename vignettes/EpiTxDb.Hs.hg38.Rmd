@@ -106,10 +106,9 @@ In addition, the `ModRNAStringSet` object can be update with the current
 sequence.
 
 ```{r}
-rna <- readDNAStringSet(system.file("extdata","rRNA_hg38.fasta",
-                                    package = "EpiTxDb.Hs.hg38")) 
+rna <- rRNA.hg38()
 seqtype(rna) <- "RNA"
-seq_new <- combineIntoModstrings(rna,mod_new)
+seq_new <- combineIntoModstrings(rna, mod_new)
 seq_new
 ```
 

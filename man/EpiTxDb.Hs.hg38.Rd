@@ -7,7 +7,8 @@
 \alias{EpiTxDb.Hs.hg38.snoRNAdb}
 \alias{EpiTxDb.Hs.hg38.tRNAdb}
 \alias{chain.rRNA.hg19Tohg38}
-\alias{chain.rRNA.hg28Tohg19}
+\alias{chain.rRNA.hg38Tohg19}
+\alias{rRNA.hg38}
 \title{Annotation package for \code{EpiTxDb} objects}
 \usage{
 EpiTxDb.Hs.hg38.RMBase(version = "1")
@@ -18,7 +19,9 @@ EpiTxDb.Hs.hg38.tRNAdb(version = "1")
 
 chain.rRNA.hg19Tohg38(version = "1")
 
-chain.rRNA.hg28Tohg19(version = "1")
+chain.rRNA.hg38Tohg19(version = "1")
+
+rRNA.hg38()
 }
 \arguments{
 \item{version}{a \code{character} value defining a version. Versions
