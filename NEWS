@@ -1,6 +1,6 @@
 Changes in version 0.99.0 (2020-02-25)
 + Submitted to Bioconductor
 
-Changes in version 1.0.1 (2020-08-26)
+Changes in version 0.99.4 (2020-08-26)
 + Fixed function name for hg38 to hg 19 chain file
 + added function for loading hg38 rRNA sequences as DNAStringSet
