@@ -78,7 +78,17 @@ df <- rbind(
                   DataProvider = "NCBI",
                   RDataClass = "ChainFile", 
                   DispatchClass = "ChainFile",
-                  RDataPath = "EpiTxDb.Hs.hg38/rRNA.hg38Tohg19.liftOver"))
+                  RDataPath = "EpiTxDb.Hs.hg38/rRNA.hg38Tohg19.liftOver")),
+  cbind(df_Base,
+        DataFrame(Title = "Sequences of snoRNA targets", 
+                  Description = paste0(
+                    "Fasta file for snoRNA targets"),
+                  SourceType = "Fasta",
+                  SourceUrl = "https://www.ncbi.nlm.nih.gov/gene",
+                  DataProvider = "NCBI",
+                  RDataClass = "FaFile", 
+                  DispatchClass = "FaFile",
+                  RDataPath = "EpiTxDb.Hs.hg38/snoRNA.targets.hg38.fa"))
 )
 
 df$Species <- "Homo sapiens"
