@@ -88,11 +88,9 @@ chain.rRNA.hg38Tohg19 <- function(version = "1"){
 }
 
 #' @rdname EpiTxDb.Hs.hg38
-#' @importFrom Biostrings readDNAStringSet
 #' @export
-rRNA.hg38 <- function(){
-    Biostrings::readDNAStringSet(system.file("extdata","rRNA_hg38.fasta",
-                                             package = "EpiTxDb.Hs.hg38"))
+snoRNA.targets.hg38 <- function(){
+    .load_resource(version = version, type = "snoRNA_seq_hg38")
 }
 
 # version information ----------------------------------------------------------
@@ -103,6 +101,7 @@ AH_DATA <- data.frame(version = "1",
                       tRNAdb = "AH78914",
                       cf_hg19Tohg38 = "AH78915",
                       cf_hg38Tohg19 = "AH78916",
+                      snoRNA_seq_hg38 = "",
                       stringsAsFactors = FALSE)
 
 # AH_DATA <- rbind(AH_DATA,
