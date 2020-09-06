@@ -101,7 +101,7 @@ AH_DATA <- data.frame(version = "1",
                       tRNAdb = "AH78914",
                       cf_hg19Tohg38 = "AH78915",
                       cf_hg38Tohg19 = "AH78916",
-                      snoRNA_seq_hg38 = "",
+                      snoRNA_seq_hg38 = "AH83362",
                       stringsAsFactors = FALSE)
 
 # AH_DATA <- rbind(AH_DATA,
