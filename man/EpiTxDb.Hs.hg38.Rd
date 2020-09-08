@@ -21,7 +21,7 @@ chain.rRNA.hg19Tohg38(version = "1")
 
 chain.rRNA.hg38Tohg19(version = "1")
 
-snoRNA.targets.hg38()
+snoRNA.targets.hg38(version = "1")
 }
 \arguments{
 \item{version}{a \code{character} value defining a version. Versions

@@ -89,7 +89,7 @@ chain.rRNA.hg38Tohg19 <- function(version = "1"){
 
 #' @rdname EpiTxDb.Hs.hg38
 #' @export
-snoRNA.targets.hg38 <- function(){
+snoRNA.targets.hg38 <- function(version = "1"){
     .load_resource(version = version, type = "snoRNA_seq_hg38")
 }
 
