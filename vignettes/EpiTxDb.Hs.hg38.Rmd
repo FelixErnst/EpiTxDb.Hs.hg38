@@ -106,7 +106,7 @@ In addition, the `ModRNAStringSet` object can be update with the current
 sequence.
 
 ```{r}
-rna <- snoRNA.targets.hg38()
+rna <- getSeq(snoRNA.targets.hg38())
 names(rna)[1:4] <- c("5S","18S","5.8S","28S")
 seqtype(rna) <- "RNA"
 seq_new <- combineIntoModstrings(rna, mod_new)
